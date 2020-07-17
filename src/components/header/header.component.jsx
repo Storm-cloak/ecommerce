@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./header.styles.scss";
 import { ReactComponent as Logo } from "../../assets/4.3 crown.svg.svg"; //special syntax in React for importring SVG
 import { auth } from "../../firebase/firebase.utils";
+import { connect } from "react-redux";
 const Header = ({ currentUser }) => {
   return (
     <div className="header">
@@ -29,5 +30,10 @@ const Header = ({ currentUser }) => {
     </div>
   );
 };
+const mapStateToProps = (state) => ({
+  // here we dont trigger any event on userReducer , it takes INITIAL_STATE value
+  // state  is root reducer
+  currentUser: state.user.currentUser, // rootreducer.user.currentUser (from userReducer object )
+});
 
-export default Header;
+export default connect(mapStateToProps)(Header);
