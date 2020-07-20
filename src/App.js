@@ -62,4 +62,4 @@ const mapDispatchToProps = (dispatch) => ({
   // Here we UPDATE userReducer value
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
-export default connect(mapStateToProps, mapDispatchToProps)(App); // we dont need any stateToProps so first parameter is NULL
+export default connect(mapStateToProps, mapDispatchToProps)(App);

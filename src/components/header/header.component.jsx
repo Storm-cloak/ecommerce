@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import "./header.styles.scss";
 import { ReactComponent as Logo } from "../../assets/4.3 crown.svg.svg"; //special syntax in React for importring SVG
 import { auth } from "../../firebase/firebase.utils";
+import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import { connect } from "react-redux";
-const Header = ({ currentUser }) => {
+const Header = ({ currentUser, hidden }) => {
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -26,14 +28,17 @@ const Header = ({ currentUser }) => {
             SIGN IN
           </Link>
         )}
+        <CartIcon />
       </div>
+      {hidden ? null : <CartDropdown />}
     </div>
   );
 };
-const mapStateToProps = (state) => ({
-  // here we dont trigger any event on userReducer , it takes INITIAL_STATE value
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+  // here we dont trigger any event on userReducer , it takes INITIAL_STATE  or just current state value
   // state  is root reducer
-  currentUser: state.user.currentUser, // rootreducer.user.currentUser (from userReducer object )
+  currentUser,
+  hidden, // rootreducer.user.currentUser (from userReducer object )
 });
 
 export default connect(mapStateToProps)(Header);
