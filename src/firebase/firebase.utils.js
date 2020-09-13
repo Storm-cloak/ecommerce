@@ -13,6 +13,7 @@ const config = {
   measurementId: "G-GDKBTCCXJR",
 };
 firebase.initializeApp(config);
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
 
@@ -53,9 +54,10 @@ export const addCollectionAndDocuments = async (
   return await batch.commit();
 };
 
-export const converCollectionsSnapshotToMap = (collection) => {
-  const transformedCollection = collection.docs.map((doc) => {
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
     const { title, items } = doc.data();
+
     return {
       routeName: encodeURI(title.toLowerCase()),
       id: doc.id,
@@ -63,11 +65,13 @@ export const converCollectionsSnapshotToMap = (collection) => {
       items,
     };
   });
+
   return transformedCollection.reduce((accumulator, collection) => {
     accumulator[collection.title.toLowerCase()] = collection;
     return accumulator;
   }, {});
 };
+
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
